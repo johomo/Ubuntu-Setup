@@ -1,0 +1,5 @@
+---
+system_python3_dir: /usr/bin/python3
+system_snap_dir: /usr/bin/snap
+pyenv_install_dir: "{{ ansible_env.HOME }}/.pyenv"
+terminator_config_dir: "{{ ansible_env.HOME }}/.config/terminator"

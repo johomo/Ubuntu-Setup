@@ -1,0 +1,26 @@
+- name: Install snapd
+  apt:
+    name: snapd
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: Delete Pycharm CE
+  shell:
+    cmd: "{{ system_snap_dir }} remove --purge pycharm-community"
+  when: snapd_pycharm_state == "absent"
+  become: yes
+
+- name: Check if Pycharm CE is installed
+  shell:
+    cmd: "{{ system_snap_dir }} list | /bin/grep "pycharm-community"
+  register: pycharm_installed
+  changed_when: pycharm_installed.rc == 1
+  ignore_errors: yes
+  when: snapd_pycharm_state == "present"
+
+- name: Install Pycharm CE
+  shell:
+    cmd: "{{ system_snap_dir }} install pycharm-community --classic"
+  when: pycharm_installed.changed
+  become: yes

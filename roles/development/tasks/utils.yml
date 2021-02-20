@@ -1,0 +1,13 @@
+---
+- name: Install Terminator
+  apt:
+    name: terminator
+    state: present
+    update_cache: yes
+  become: yes
+
+# Requires pipx. Available in pipx.yml
+- name: Install or upgrade csvkit
+  shell:
+      cmd: "{{ system_python3_dir }} -m pipx install csvkit"
+

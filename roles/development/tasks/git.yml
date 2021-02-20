@@ -1,0 +1,10 @@
+---
+- name: Install git
+  apt:
+    name:
+    - git
+    - tig
+    state: present
+    update_cache: yes
+  become: yes
+

@@ -1,0 +1,9 @@
+---
+#- import_tasks: git.yml
+#- import_tasks: vim.yml
+#- import_tasks: pipx.yml
+- import_tasks: utils.yml
+#- import_tasks: pyenv.yml
+#- import_tasks: docker.yml
+#- import_tasks: pycharm.yml
+#- import_tasks: bashrc.yml

@@ -1,0 +1,61 @@
+---
+- name: Get pyenv install dir
+  ansible.builtin.stat:
+    path: "{{ pyenv_install_dir }}"
+  register: directory
+  changed_when: not directory.stat.exists
+
+- name: Install pyenv's build enviroment
+  apt:
+    name:
+      - git
+      - make
+      - build-essential
+      - libssl-dev
+      - zlib1g-dev
+      - libbz2-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - wget
+      - curl
+      - llvm
+      - libncurses5-dev
+      - xz-utils
+      - tk-dev
+      - libxml2-dev
+      - libxmlsec1-dev
+      - libffi-dev
+      - liblzma-dev
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: Run pyenv installer
+  shell:
+    cmd: curl https://pyenv.run | bash
+  when: directory.changed
+
+- name: Set environment variables
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    backup: yes
+    state: present
+    block: |
+        export PATH="{{ pyenv_install_dir }}/bin:$PATH"
+        eval "$(pyenv init -)"
+        eval "$(pyenv virtualenv-init -)"
+
+- name: Update pyenv
+  shell:
+      cmd: "{{ pyenv_install_dir }}/bin/pyenv update"
+  when: directory.changed
+
+- name: Install python versions
+  shell:
+    cmd: "{{ pyenv_install_dir }}/bin/pyenv install --skip-existing {{ item }}"
+  loop: "{{ pyenv_python_versions }}"
+
+- name: Set pyenv global
+  shell:
+    cmd: "{{ pyenv_install_dir }}/bin/pyenv global {{ pyenv_python_versions[0] }}"
+

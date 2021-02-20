@@ -1,0 +1,24 @@
+---
+- name: Custom .bashrc file
+  blockinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    backup: yes
+    state: present
+    block: |
+        # Show git branch in prompt
+        parse_git_branch() {
+            git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+        }
+        export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+        # Localization
+        export LANG="en_US.UTF-8"
+        export LC_ALL="en_US.UTF-8"
+
+        # Utils
+        alias grepy="grep -r --include='*.py'"
+
+        # Others
+        alias meet="google-chrome https://meet.new"
+        alias nevermind='echo "¯\_(ツ)_/¯"'
+
