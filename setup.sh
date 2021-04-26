@@ -1,7 +1,6 @@
 #!/bin/bash
 
-command -v ansible > /dev/null 2>&1
-if [$? -ne "0"]; then
+if ! command -v ansible > /dev/null 2>&1; then
     echo "Ansible not found. Installing..."
     sudo apt update
     sudo apt install software-properties-common
