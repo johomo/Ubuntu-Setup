@@ -20,5 +20,9 @@
 
         # Others
         alias meet="google-chrome https://meet.new"
-        alias nevermind='echo "¯\_(ツ)_/¯"'
+        alias gitmoji="google-chrome https://gitmoji.dev"
+        alias shrug='echo "¯\_(ツ)_/¯"'
+        alias putonglasses='echo -e "(•_•)\n( •_•)>⌐■-■\n(⌐■_■)"'
+        alias fliptable='echo "(╯°□°)╯︵ ┻━┻"'
+        alias fliptables='echo "┻━┻︵ \(°□°)/ ︵ ┻━┻"'
 
