@@ -13,6 +13,13 @@
     update_cache: yes
   become: yes
 
+- name: Install Unzip
+  apt:
+    name: unzip
+    state: present
+    update_cache: yes
+  become: yes
+
 # Requires pipx. Available in pipx.yml
 - name: Install or upgrade csvkit
   shell:
