@@ -5,5 +5,5 @@
 - import_tasks: utils.yml
 - import_tasks: pyenv.yml
 - import_tasks: docker.yml
-- import_tasks: pycharm.yml
+- import_tasks: snapd.yml
 - import_tasks: bashrc.yml

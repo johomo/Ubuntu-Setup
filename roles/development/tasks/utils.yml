@@ -24,4 +24,5 @@
 - name: Install or upgrade csvkit
   shell:
       cmd: "{{ system_python3_dir }} -m pipx install csvkit"
+  ignore_errors: yes
 

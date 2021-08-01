@@ -1,0 +1,12 @@
+- name: Install snapd
+  apt:
+    name: snapd
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: "Install {{ item }}"
+  shell:
+    cmd: "{{ system_snap_dir }} install {{ item }} --classic"
+  become: yes
+  loop: "{{ snapd_softwares }}"
