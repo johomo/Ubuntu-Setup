@@ -1,8 +1,7 @@
 pyenv_python_versions: # first one will be system's default
-  - 3.9-dev
-  - 3.8-dev
+  - 3.12-dev
 
 snapd_softwares:
   - pycharm-community
-  - goland
+  - go
 

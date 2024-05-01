@@ -2,26 +2,11 @@
 - name: Install pipx dependencies
   apt:
     name:
-      - python3-pip
-      - python3-venv
+      - pipx
     state: present
     update_cache: yes
   become: yes
 
-- name: Check if pipx is already installed
-  shell:
-    cmd: "{{ system_python3_dir }} -m pip list | grep pipx"
-  register: pipx_check
-  changed_when: pipx_check.rc != 0
-  ignore_errors: yes
-
 - name: Install pipx
   shell:
-    cmd: "{{ system_python3_dir }} -m pip install --user pipx"
-  when: pipx_check.changed
-
-- name: Add pipx to PATH
-  shell:
-    cmd: "{{ system_python3_dir }} -m pipx ensurepath --force"
-  when: pipx_check.changed
-
+    cmd: "pipx ensurepath"

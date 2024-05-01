@@ -1,11 +1,4 @@
 ---
-- name: Check docker is installed
-  command:
-    cmd: docker --version
-  register: docker_check
-  changed_when: docker_check.rc != 0
-  ignore_errors: yes
-
 - name: Install software
   apt:
     name:
@@ -16,14 +9,12 @@
     - software-properties-common
     state: present
     update_cache: yes
-  when: docker_check is changed
   become: yes
 
 - name: Add Docker GPG key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     state: present
-  when: docker_check is changed
   become: yes
 
 - name: Add Docker APT repository
@@ -31,7 +22,6 @@
     repo: deb [arch=amd64] https://download.docker.com/linux/{{ansible_distribution|lower}} {{ansible_distribution_release}} stable
     state: present
     update_cache: yes
-  when: docker_check is changed
   become: yes
 
 - name: Install Docker
@@ -40,20 +30,9 @@
     - docker-ce
     - docker-ce-cli
     - containerd.io
+    - docker-buildx-plugin
+    - docker-compose-plugin
     state: present
     update_cache: yes
-  when: docker_check is changed
   become: yes
-
-- name: Check docker-compose is installed
-  command: docker-compose --version
-  register: docker_compose_check
-  changed_when: docker_compose_check.rc != 0
-  ignore_errors: yes
-
-# Requires pipx. Available in pipx.yml
-- name: Install docker-compose
-  shell:
-    cmd: "{{ system_python3_dir }} -m pipx install docker-compose"
-  when: docker_compose_check is changed
 
